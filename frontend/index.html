@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wallet Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Wallet Generator Scam</h1>
+        <p>Generate cryptocurrency wallets instantly</p>
+        <button onclick="generateWallet()">Generate Wallet</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function generateWallet() {
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({chain: 'bitcoin'})
+            });
+            
+            const data = await response.json();
+            document.getElementById('result').innerHTML = 
+                `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+    </script>
+</body>
+</html>
