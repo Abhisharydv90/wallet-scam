@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated Wallet</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Generated Wallet</h1>
+        <div id="wallet-details"></div>
+        <button onclick="payWallet()">Process Payment</button>
+        <div id="payment-result"></div>
+    </div>
+
+    <script>
+        // Load wallet details from localStorage
+        const wallet = JSON.parse(localStorage.getItem('wallet'));
+        document.getElementById('wallet-details').innerHTML = 
+            `<pre>${JSON.stringify(wallet, null, 2)}</pre>`;
+
+        async function payWallet() {
+            const response = await fetch('/pay', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    wallet_id: wallet.id,
+                    amount: 1000,
+                    currency: 'INR'
+                })
+            });
+            
+            const data = await response.json();
+            document.getElementById('payment-result').innerHTML = 
+                `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+    </script>
+</body>
+</html>
